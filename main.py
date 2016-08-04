@@ -5,10 +5,10 @@ def printError(funcion,linea, error):
 	if(linea == -1):
 		print "[ERROR] La función "+funcion+" "+error
 	else:
-		print "[ERROR][Linea: "+str(linea)+"] La función "+funcion+" "+error
+		print "[ERROR][Linea: "+str(linea)+"] La función \""+funcion+"\" "+error
 # Buscar Si tiene el title
 archivo = open("suertex.txt", "r")
-i = 0
+i = 1
 flags = {"separamiles": False,"ofecha": False,"error": 0}
 data = {"nproy": False}
 validFunctions = {'separamiles','ofecha','fn','fc','nproy','titulo','inicio','fin','item'}
@@ -41,6 +41,15 @@ for linea in archivo:
 	for text in result:
 		if text.strip("{") not in validFunctions:
 			printError(text,i, "no es una función valida")
+			flags["error"]+=1
+	# Buscar } mal usadas
+	result = re.findall(r'.{1,}}',linea)
+	for text in result:
+		r2 = text.split("{")
+		r2 = r2[0].split("\\")
+		#print r2
+		if len(r2) == 1 or r2[-1] not in validFunctions:
+			printError(r2[-1][:-1],i, "no es una función valida")
 			flags["error"]+=1
 	i+=1
 if not data["nproy"]:
