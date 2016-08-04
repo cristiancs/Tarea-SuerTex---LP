@@ -15,7 +15,7 @@ def inicio(action):
 		return "<ul>\n"
 	else:
 		return False
-def fin(texto):
+def fin(action):
 	if action == "lista_enumerada":
 		return "</ol>\n"
 	elif action == "lista_punteada":
@@ -27,7 +27,7 @@ def item(texto):
 
 # FUNCIONES ADICIONALES
 def function(comando, argumento): # Comparar el string comando para verificar cual es
-	comando = comando[0:]
+	comando = comando[1:]
 	if comando == "fn":
 		fn(argumento)
 	elif comando == "fc":
@@ -49,5 +49,9 @@ def function(comando, argumento): # Comparar el string comando para verificar cu
 def toHtml(linea):	# Verificar funcion llamada, para trabajar con html
 	cmds = re.findall(r'[A-z]{1,}{[a-zA-Z\s]*.{1,}}', linea)	#[A-z]{1,}{[a-zA-Z\s]*.{1,}}
 	for comando in cmds:
-		comandos = comando.split(comando, "{")
+		comandos = comando.split("{")
 		function(comandos[0], comandos[1][:-1])
+
+archivo = open("suertex.txt", "r")
+for linea in archivo:
+	toHtml(linea)
