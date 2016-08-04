@@ -1,8 +1,8 @@
 import re
 
-archivo = open("suertex.txt", "r")
-for linea in archivo:
-	re.search(pattern, string, flags=0)
-
+#Obtener numero de separar miles
+string = 'aa /separamiles{25}'
+result = re.findall(r'/separamiles{([0-9]{1,})}',string)
+print result
 
 
