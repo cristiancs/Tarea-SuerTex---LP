@@ -29,29 +29,35 @@ def item(texto):
 def function(comando, argumento): # Comparar el string comando para verificar cual es
 	comando = comando[1:]
 	if comando == "fn":
-		fn(argumento)
+		return fn(argumento)
 	elif comando == "fc":
-		fc(argumento)
+		return fc(argumento)
 	elif comando == "nproy":
-		nproy(argumento)
+		return nproy(argumento)
 	elif comando == "titulo":
-		titulo(argumento)
+		return titulo(argumento)
 	elif comando == "inicio":
-		inicio(argumento)
+		return inicio(argumento)
 	elif comando == "fin":
-		fin(argumento)
+		return fin(argumento)
 	elif comando == "item":
-		item(argumento)
+		return item(argumento)
 	else:
 		print "No entre a ningun comando en function"
 
 
 def toHtml(linea):	# Verificar funcion llamada, para trabajar con html
 	cmds = re.findall(r'[A-z]{1,}{[a-zA-Z\s]*.{1,}}', linea)	#[A-z]{1,}{[a-zA-Z\s]*.{1,}}
+	retorno = ""
 	for comando in cmds:
 		comandos = comando.split("{")
-		function(comandos[0], comandos[1][:-1])
+		retorno += function(comandos[0], comandos[1][:-1])
+	return retorno
 
 archivo = open("suertex.txt", "r")
+salida = open("output.html", "w")
 for linea in archivo:
-	toHtml(linea)
+	salida.write(toHtml(linea))
+
+archivo.close()
+salida.close()
