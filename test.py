@@ -1,8 +1,8 @@
 import re
 
 #Obtener numero de separar miles
-string = '/separamiles{25}'
-result = re.split(r'/separamiles{',string)
-result = re.split(r'}',result[1])[0]
+string = 'aa /separamiles{25}'
+result = re.findall(r'/separamiles{([0-9]{1,})}',string)
+print result
 
 
