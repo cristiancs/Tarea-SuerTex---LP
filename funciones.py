@@ -1,4 +1,5 @@
 import re
+# FUNCIONES TRANSFORMACION A HTML
 def fn(texto):
 	return "<b>"+texto+"</b>"
 def fc(texto):
@@ -23,3 +24,30 @@ def fin(texto):
 		return False
 def item(texto):
 	return "<li>"+texto+"</li>\n"
+
+# FUNCIONES ADICIONALES
+def function(comando, argumento): # Comparar el string comando para verificar cual es
+	comando = comando[0:]
+	if comando == "fn":
+		fn(argumento)
+	elif comando == "fc":
+		fc(argumento)
+	elif comando == "nproy":
+		nproy(argumento)
+	elif comando == "titulo":
+		titulo(argumento)
+	elif comando == "inicio":
+		inicio(argumento)
+	elif comando == "fin":
+		fin(argumento)
+	elif comando == "item":
+		item(argumento)
+	else:
+		print "No entre a ningun comando en function"
+
+
+def toHtml(linea):	# Verificar funcion llamada, para trabajar con html
+	cmds = re.findall(r'[A-z]{1,}{[a-zA-Z\s]*.{1,}}', linea)	#[A-z]{1,}{[a-zA-Z\s]*.{1,}}
+	for comando in cmds:
+		comandos = comando.split(comando, "{")
+		function(comandos[0], comandos[1][:-1])
