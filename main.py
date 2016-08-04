@@ -29,6 +29,7 @@ for linea in archivo:
 		else:
 			printError(result.group(),i, "ha sido declarada en un lugar incorrecto")
 			flags["error"]+=1
+	# Buscar titulo de la página
 	result = re.search(r'\\nproy{[a-zA-Z\s]{1,}}',linea)
 	if result:
 		if data["nproy"] != False:
@@ -36,10 +37,12 @@ for linea in archivo:
 		else:
 			data["nproy"] = result.group()
 	i+=1
-
 if not data["nproy"]:
+	#El titulo nunca fue declarado
 	printError("\\nproy",-1, "No ha sido declarada")
 	flags["error"]+=1
+
+
 
 
 if flags["error"] > 0:
