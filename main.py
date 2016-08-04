@@ -51,6 +51,12 @@ for linea in archivo:
 		if len(r2) == 1 or r2[-1] not in validFunctions:
 			printError(r2[-1][:-1],i, "no es una función valida")
 			flags["error"]+=1
+	# Buscar \ mal usadas
+	# result = re.findall(r'.{1,}\\',linea)
+	# if result:
+	# 	printError("/",i, " no esta permitida fuera de las variables")
+		# flags["error"]+=1
+
 	i+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
@@ -66,3 +72,4 @@ if flags["error"] > 0:
 else:
 	# Se genera el código
 	print "Compilación generada"
+	import funciones
