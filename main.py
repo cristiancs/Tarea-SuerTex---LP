@@ -11,7 +11,7 @@ archivo = open("suertex.txt", "r")
 i = 0
 flags = {"separamiles": False,"ofecha": False,"error": 0}
 data = {"nproy": False}
-validFunctions = {'fn','fc','nproy','titulo','inicio','fin','item'}
+validFunctions = {'separamiles','ofecha','fn','fc','nproy','titulo','inicio','fin','item'}
 for linea in archivo:
 	# Buscar  separarmiles
 	result = re.search(r'\\separamiles{}',linea)
@@ -36,6 +36,12 @@ for linea in archivo:
 			printError("\\nproy",i, "ha sido declarada más de una vez")
 		else:
 			data["nproy"] = result.group()
+	# Buscar { mal usadas
+	result = re.findall(r'[a-zA-Z\s]{1,}{',linea)
+	for text in result:
+		if text.strip("{") not in validFunctions:
+			printError(text,i, "no es una función valida")
+			flags["error"]+=1
 	i+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
