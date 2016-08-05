@@ -49,9 +49,21 @@ def function(comando, argumento): # Comparar el string comando para verificar cu
 def toHtml(linea):	# Verificar funcion llamada, para trabajar con html
 	cmds = re.findall(r'[A-z]{1,}{[a-zA-Z\s]*.{1,}}', linea)	#[A-z]{1,}{[a-zA-Z\s]*.{1,}}
 	retorno = ""
+	plano = True
 	for comando in cmds:
+		plano = False
+		pos_cmd = linea.find(comando)
+		retorno += linea[:pos_cmd]
+		linea = linea[pos_cmd:]
+		largo_actual = len(comando)
 		comandos = comando.split("{")
-		retorno += function(comandos[0], comandos[1][:-1])
+		if len(comandos)<=2:
+			retorno += function(comandos[0], comandos[1][:-1])
+			linea = linea[pos_cmd+largo_actual:]
+		else:
+			None
+	if plano == True:
+		retorno += linea
 	return retorno
 
 archivo = open("suertex.txt", "r")
