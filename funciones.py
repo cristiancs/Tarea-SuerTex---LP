@@ -5,25 +5,25 @@ def fn(texto):
 def fc(texto):
 	return "<i>"+texto+"</i>"
 def nproy(texto):
-	return "<head>\n\t<title>"+texto+"</title>\n</head>"
+	return "<head>\n<title>"+texto+"</title>\n</head>\n<body>"
 def titulo(texto):
 	return "<h1>"+texto+"</h1>"
 def inicio(action):
 	if action == "lista_enumerada":
-		return "<ol>\n"
+		return "<ol>"
 	elif action == "lista_punteada":
-		return "<ul>\n"
+		return "<ul>"
 	else:
 		return False
 def fin(action):
 	if action == "lista_enumerada":
-		return "</ol>\n"
+		return "</ol>"
 	elif action == "lista_punteada":
-		return "</ul>\n"
+		return "</ul>"
 	else:
 		return False
 def item(texto):
-	return "<li>"+texto+"</li>\n"
+	return "<li>"+texto+"</li>"
 
 # FUNCIONES ADICIONALES
 def function(comando, argumento): # Comparar el string comando para verificar cual es
@@ -60,9 +60,10 @@ def writeLine(linea):
 
 archivo = open("suertex.txt", "r")
 salida = open("output.html", "w")
+salida.write("<!DOCTYPE HTML>")
 for linea in archivo:
-	test = writeLine(linea)
-	salida.write(test)
+	salida.write(writeLine(linea))
+salida.write("\n</body>")
 
 archivo.close()
 salida.close()
