@@ -55,7 +55,7 @@ def writeLine(linea):
 	search = re.search(r'(\\[^\\]*?})', linea)
 	if search:
 		linea = re.sub(r'\\[^\\]*?}', toHtml, linea)
-		writeLine(linea)
+		linea = writeLine(linea)
 	return linea
 
 archivo = open("suertex.txt", "r")
