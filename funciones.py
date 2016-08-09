@@ -47,7 +47,7 @@ def function(comando, argumento): # Comparar el string comando para verificar cu
 	else:
 		print "No entre a ningun comando en function"
 
-def isParagraph(linea):
+def isParagraph(linea): # 0 = No es parrafo; 1 = Es parrafo; 2 = Parrafo nuevo
 	if linea == "\n":
 		return False
 	cmd = re.match(r'\\\w+\{', linea)
@@ -55,8 +55,20 @@ def isParagraph(linea):
 	if cmd:
 		func = cmd.group()[1:-1]
 		if func in nonParagraphs:
-			return False
-	return True
+			return 0
+		return 2
+	return 1
+
+def formatPG(linea, next, p_abierto=False, end=False):
+	if not p_abierto and isParagraph(linea):
+		linea = "<p>" + linea
+		p_abierto = True
+	if p_abierto:
+		pg_type = isParagraph(next)
+		if not pg_type or pg_type == 2 or end:
+			linea = linea.strip("\n")+"</p>\n"
+			p_abierto = False
+	return linea, p_abierto
 
 def toHtml(comando):	# Verificar funcion llamada, para trabajar con html
 	comando = comando.group()
@@ -75,12 +87,14 @@ archivo = open("suertex.txt", "r")
 salida = open("output.html", "w")
 salida.write("<!DOCTYPE HTML>")
 p_abierto = False
-for linea in archivo:
-	if isParagraph(linea) and not p_abierto:
-		linea = "<p>" + linea
-		p_abierto = True
+linea = archivo.readline()
+for next in archivo:
+	linea, p_abierto = formatPG(linea, next, p_abierto)
 	salida.write(writeLine(linea))
-salida.write("\n</body>")
+	linea = next
+linea, p_abierto = formatPG(linea, next, p_abierto, True)
+salida.write(writeLine(linea))
+salida.write("</body>")
 
 archivo.close()
 salida.close()
