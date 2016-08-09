@@ -88,6 +88,7 @@ salida = open("output.html", "w")
 salida.write("<!DOCTYPE HTML>")
 p_abierto = False
 linea = archivo.readline()
+next = ""
 for next in archivo:
 	linea, p_abierto = formatPG(linea, next, p_abierto)
 	salida.write(writeLine(linea))
