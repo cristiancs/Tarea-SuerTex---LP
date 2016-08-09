@@ -1,5 +1,9 @@
 import re
+
+global_parr = False
+
 # FUNCIONES TRANSFORMACION A HTML
+
 def fn(texto):
 	return "<b>"+texto+"</b>"
 def fc(texto):
@@ -26,6 +30,7 @@ def item(texto):
 	return "<li>"+texto+"</li>"
 
 # FUNCIONES ADICIONALES
+
 def function(comando, argumento): # Comparar el string comando para verificar cual es
 	if comando == "fn":
 		return fn(argumento)
@@ -44,6 +49,16 @@ def function(comando, argumento): # Comparar el string comando para verificar cu
 	else:
 		print "No entre a ningun comando en function"
 
+def isParagraph(linea):
+	if linea == "\n":
+		return False
+	cmd = re.match(r'<.*?>', linea)
+	nonParagraphs = ["!DOCTYPE HTML", "h1", "ol", "ul", "li", "body", "head", "/head", "/ol", "/ul"]
+	if cmd:
+		func = cmd.group()[1:-1]
+		if func in nonParagraphs:
+			return False
+	return True
 
 def toHtml(comando):	# Verificar funcion llamada, para trabajar con html
 	comando = comando.group()
@@ -52,16 +67,22 @@ def toHtml(comando):	# Verificar funcion llamada, para trabajar con html
 	return function(cmd.group()[1:-1], argmt.group()[1:-1])
 
 def writeLine(linea):
+	global global_parr
 	search = re.search(r'(\\[^\\]*?})', linea)
 	if search:
 		linea = re.sub(r'\\[^\\]*?}', toHtml, linea)
 		linea = writeLine(linea)
+	else:
+		if isParagraph(linea) and not global_parr:
+			linea = "<p>"+linea
+			global_parr = True
 	return linea
 
 archivo = open("suertex.txt", "r")
 salida = open("output.html", "w")
 salida.write("<!DOCTYPE HTML>")
 for linea in archivo:
+
 	salida.write(writeLine(linea))
 salida.write("\n</body>")
 
