@@ -1,7 +1,5 @@
 import re
 
-global_parr = False
-
 # FUNCIONES TRANSFORMACION A HTML
 
 def fn(texto):
@@ -52,8 +50,8 @@ def function(comando, argumento): # Comparar el string comando para verificar cu
 def isParagraph(linea):
 	if linea == "\n":
 		return False
-	cmd = re.match(r'<.*?>', linea)
-	nonParagraphs = ["!DOCTYPE HTML", "h1", "ol", "ul", "li", "body", "head", "/head", "/ol", "/ul"]
+	cmd = re.match(r'\\\w+\{', linea)
+	nonParagraphs = ["nproy", "titulo", "inicio", "fin", "item", "separamiles"]
 	if cmd:
 		func = cmd.group()[1:-1]
 		if func in nonParagraphs:
@@ -67,22 +65,20 @@ def toHtml(comando):	# Verificar funcion llamada, para trabajar con html
 	return function(cmd.group()[1:-1], argmt.group()[1:-1])
 
 def writeLine(linea):
-	global global_parr
 	search = re.search(r'(\\[^\\]*?})', linea)
 	if search:
 		linea = re.sub(r'\\[^\\]*?}', toHtml, linea)
 		linea = writeLine(linea)
-	else:
-		if isParagraph(linea) and not global_parr:
-			linea = "<p>"+linea
-			global_parr = True
 	return linea
 
 archivo = open("suertex.txt", "r")
 salida = open("output.html", "w")
 salida.write("<!DOCTYPE HTML>")
+p_abierto = False
 for linea in archivo:
-
+	if isParagraph(linea) and not p_abierto:
+		linea = "<p>" + linea
+		p_abierto = True
 	salida.write(writeLine(linea))
 salida.write("\n</body>")
 
