@@ -27,7 +27,6 @@ def item(texto):
 
 # FUNCIONES ADICIONALES
 def function(comando, argumento): # Comparar el string comando para verificar cual es
-	comando = comando[1:]
 	if comando == "fn":
 		return fn(argumento)
 	elif comando == "fc":
@@ -46,30 +45,24 @@ def function(comando, argumento): # Comparar el string comando para verificar cu
 		print "No entre a ningun comando en function"
 
 
-def toHtml(linea):	# Verificar funcion llamada, para trabajar con html
-	cmds = re.findall(r'[A-z]{1,}{[a-zA-Z\s]*.{1,}}', linea)	#[A-z]{1,}{[a-zA-Z\s]*.{1,}}
-	retorno = ""
-	if cmds == []:
-		retorno += linea
-	else:
-		for comando in cmds:
-			plano = False
-			pos_cmd = linea.find(comando)
-			retorno += linea[:pos_cmd]
-			linea = linea[pos_cmd:]
-			largo_actual = len(comando)
-			comandos = comando.split("{")
-			if len(comandos)<=2:
-				retorno += function(comandos[0], comandos[1][:-1])
-				linea = linea[pos_cmd+largo_actual:]
-			else:
-				None
-	return retorno
+def toHtml(comando):	# Verificar funcion llamada, para trabajar con html
+	comando = comando.group()
+	cmd = re.match(r'(\\\w+\{)', comando)
+	argmt = re.search(r'{.*}', comando)
+	return function(cmd.group()[1:-1], argmt.group()[1:-1])
+
+def writeLine(linea):
+	search = re.search(r'(\\[^\\]*?})', linea)
+	if search:
+		linea = re.sub(r'\\[^\\]*?}', toHtml, linea)
+		writeLine(linea)
+	return linea
 
 archivo = open("suertex.txt", "r")
 salida = open("output.html", "w")
 for linea in archivo:
-	salida.write(toHtml(linea))
+	test = writeLine(linea)
+	salida.write(test)
 
 archivo.close()
 salida.close()
