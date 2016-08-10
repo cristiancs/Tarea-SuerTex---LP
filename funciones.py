@@ -1,7 +1,24 @@
 import re
 
 # FUNCIONES TRANSFORMACION A HTML
+# FUNCIONES
+def verificarNum(numString):
+	return None
+def separamiles(numero):
+	separador = "."
+	original = numero
+	largo = len(numero)
+	for i in range(-1, -largo, -1):
+		if (i % -3) == 0:
+			numero = separador.join([original[:i], numero[largo+i:]])
+	return numero
+			
+def verifFecha(string):
+	return None			
+def ofecha(fecha):
+	return None
 
+# COMANDOS
 def fn(texto):
 	return "<strong>"+texto+"</strong>"
 def fc(texto):
