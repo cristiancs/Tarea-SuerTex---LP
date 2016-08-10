@@ -2,9 +2,8 @@ import re
 
 # FUNCIONES TRANSFORMACION A HTML
 # FUNCIONES
-def verificarNum(numString):
-	return None
-def separamiles(numero):
+def separarNum(numero):
+	numero = numero.group()
 	separador = "."
 	original = numero
 	largo = len(numero)
@@ -12,9 +11,17 @@ def separamiles(numero):
 		if (i % -3) == 0:
 			numero = separador.join([original[:i], numero[largo+i:]])
 	return numero
+
+def separamiles(linea):
+	palabras = linea.split()
+	linea = ""
+	for pal in palabras:
+		linea += re.sub(r'^[0-9]*$', separarNum, pal)+" "
+	return linea
 			
 def verifFecha(string):
-	return None			
+	return None	
+
 def ofecha(fecha):
 	return None
 
@@ -108,9 +115,14 @@ linea = archivo.readline()
 sig = ""
 for sig in archivo:
 	linea, p_abierto = formatPG(linea, sig, p_abierto)
+
+	if True:	# Modificar segun flag \separamiles{} correspondiente
+		linea = separamiles(linea)
+
 	salida.write(writeLine(linea))
 	linea = sig
 linea, p_abierto = formatPG(linea, sig, p_abierto, True)
+linea = separamiles(linea)		# Verificar ultima linea
 salida.write(writeLine(linea))
 salida.write("</body>")
 
