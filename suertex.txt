@@ -5,7 +5,7 @@ Todo hombre sabio teme \fn{tres} cosas:
 \inicio{lista_enumerada}
 \item{La tormenta en el mar.}
 \item{La noche sin luna.}
-\item{La ira de un ho}mbre amable.}
+\item{La ira de un hombre amable.}
 \fin{lista_enumerada}
 \titulo{Como saber quien eres}
 Si quieres saber quien eres, camina hasta que no haya nadie que sepa tu nombre.
