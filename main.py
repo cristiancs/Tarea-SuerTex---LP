@@ -70,11 +70,13 @@ for linea in archivo:
 			brackets.append(caracter)
 		if re.match(r'[\]\}]', caracter):
 			if(len(brackets) == 0):
-				printError("Hay una llave mal cerrada", i,"")
+				printError("Hay una llave mal cerrada/abierta", i,"")
 				flags["error"]+=1
 			else:
 				brackets.pop()
-
+	if(len(brackets) > 0):
+		printError("Hay una llave mal cerrada/abierta", i,"")
+		flags["error"]+=1
 	i+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
