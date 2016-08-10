@@ -59,12 +59,12 @@ def isParagraph(linea): # 0 = No es parrafo; 1 = Es parrafo; 2 = Parrafo nuevo
 		return 2
 	return 1
 
-def formatPG(linea, next, p_abierto=False, end=False):
+def formatPG(linea, sig, p_abierto=False, end=False):
 	if not p_abierto and isParagraph(linea):
 		linea = "<p>" + linea
 		p_abierto = True
 	if p_abierto:
-		pg_type = isParagraph(next)
+		pg_type = isParagraph(sig)
 		if not pg_type or pg_type == 2 or end:
 			linea = linea.strip("\n")+"</p>\n"
 			p_abierto = False
@@ -82,18 +82,18 @@ def writeLine(linea):
 		linea = re.sub(r'\\[^\\]*?}', toHtml, linea)
 		linea = writeLine(linea)
 	return linea
-
+	
 archivo = open("suertex.txt", "r")
 salida = open("output.html", "w")
 salida.write("<!DOCTYPE HTML>")
 p_abierto = False
 linea = archivo.readline()
-next = ""
-for next in archivo:
-	linea, p_abierto = formatPG(linea, next, p_abierto)
+sig = ""
+for sig in archivo:
+	linea, p_abierto = formatPG(linea, sig, p_abierto)
 	salida.write(writeLine(linea))
-	linea = next
-linea, p_abierto = formatPG(linea, next, p_abierto, True)
+	linea = sig
+linea, p_abierto = formatPG(linea, sig, p_abierto, True)
 salida.write(writeLine(linea))
 salida.write("</body>")
 
