@@ -3,9 +3,9 @@ import re
 # FUNCIONES TRANSFORMACION A HTML
 
 def fn(texto):
-	return "<b>"+texto+"</b>"
+	return "<strong>"+texto+"</strong>"
 def fc(texto):
-	return "<i>"+texto+"</i>"
+	return "<em>"+texto+"</em>"
 def nproy(texto):
 	return "<head>\n<title>"+texto+"</title>\n</head>\n<body>"
 def titulo(texto):
@@ -82,7 +82,7 @@ def writeLine(linea):
 		linea = re.sub(r'\\[^\\]*?}', toHtml, linea)
 		linea = writeLine(linea)
 	return linea
-	
+
 archivo = open("suertex.txt", "r")
 salida = open("output.html", "w")
 salida.write("<!DOCTYPE HTML>")
