@@ -12,6 +12,7 @@ i = 1
 flags = {"separamiles": False,"ofecha": False,"error": 0}
 data = {"nproy": False}
 validFunctions = {'separamiles','ofecha','fn','fc','nproy','titulo','inicio','fin','item'}
+brackets = []
 for linea in archivo:
 	# Buscar  separarmiles
 	result = re.search(r'\\separamiles{}',linea)
@@ -61,13 +62,24 @@ for linea in archivo:
 			if funcion not in validFunctions:
 				printError("/",i, " no esta permitida fuera de las variables")
 				flags["error"]+=1
+	
+	# Verificar que se usen bien los { }, [ ]
+	result = re.findall(r'[\[\{\]\}]',linea)
+	for caracter in result:
+		if re.match(r'[\[\{]', caracter):
+			brackets.append(caracter)
+		if re.match(r'[\]\}]', caracter):
+			if(len(brackets) == 0):
+				printError("Hay una llave mal cerrada", i,"")
+				flags["error"]+=1
+			else:
+				brackets.pop()
 
 	i+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
 	printError("\\nproy",-1, "No ha sido declarada")
 	flags["error"]+=1
-
 
 
 
