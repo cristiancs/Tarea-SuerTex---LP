@@ -128,6 +128,5 @@ linea = ofecha(linea)
 linea, p_abierto = formatPG(linea, sig, p_abierto, True)
 salida.write(writeLine(linea))
 salida.write("</body>")
-
 archivo.close()
 salida.close()
