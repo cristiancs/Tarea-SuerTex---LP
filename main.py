@@ -79,12 +79,18 @@ for linea in archivo:
 		printError("Hay una llave mal cerrada/abierta", i,"")
 		flags["error"]+=1
 	#Agregar inicio / fin a una lista
-	result = re.findall(r'\\inicio|\\fin',linea)
+	result = re.findall(r'\\inicio{.{0,}}|\\fin{.{0,}}',linea)
 	for tag in result:
 		inicioFinList.append(tag)
+		#Buscar que el parametro que recibe es correcto el inicio/fin
+		argmt = re.search(r'{.*}', tag)
+		if argmt.group()[1:-1] != 'lista_enumerada' and argmt.group()[1:-1] != 'lista_punteada':
+			printError(argmt.group()[1:-1], i," no es un parametro valido para el tag \inicio o \\fin")
+			flags["error"]+=1 
+
 	# Verificar que los items esten dentro de un \inicio
 	result = re.findall(r'\\item',linea)
-	if result and inicioFinList[-1] != '\\inicio':
+	if result and not re.search(r'\\inicio{.{0,}}', inicioFinList[-1]):
 		printError("\item", i,"se encuentra fuera de una lista")
 		flags["error"]+=1 
 	i+=1
@@ -96,7 +102,7 @@ if not data["nproy"]:
 for i in range(len(inicioFinList)/2):
 	t1 = inicioFinList.pop()
 	t2 = inicioFinList.pop()
-	if t2 != '\\inicio' or t1 != '\\fin':
+	if not re.search(r'\\inicio{.{0,}}', t2) or not re.search(r'\\fin{.{0,}}', t1):
 		printError("tag \inicio, \\fin",-1, "No ha sido utilizado correctamente")
 		flags["error"]+=1
 if flags["error"] > 0:
