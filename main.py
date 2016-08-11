@@ -13,6 +13,7 @@ flags = {"separamiles": False,"ofecha": False,"error": 0}
 data = {"nproy": False}
 validFunctions = {'separamiles','ofecha','fn','fc','nproy','titulo','inicio','fin','item'}
 brackets = []
+inicioFinList = []
 for linea in archivo:
 	# Buscar  separarmiles
 	result = re.search(r'\\separamiles{}',linea)
@@ -77,14 +78,22 @@ for linea in archivo:
 	if(len(brackets) > 0):
 		printError("Hay una llave mal cerrada/abierta", i,"")
 		flags["error"]+=1
+	#verificar /inicio /fin
+	result = re.findall(r'\\inicio|\\fin',linea)
+	for tag in result:
+		inicioFinList.append(tag)
 	i+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
 	printError("\\nproy",-1, "No ha sido declarada")
 	flags["error"]+=1
 
-
-
+for i in range(len(inicioFinList)/2):
+	t1 = inicioFinList.pop()
+	t2 = inicioFinList.pop()
+	if t2 != '\\inicio' or t1 != '\\fin':
+		printError("tag \inicio, \\fin",-1, "No ha sido utilizado correctamente")
+		flags["error"]+=1
 if flags["error"] > 0:
 	# Se ha generado un error, muere el programa.
 	print "No ha sido posible compilar el archivo suertex.txt, se han generado "+str(flags["error"])+" errores."
