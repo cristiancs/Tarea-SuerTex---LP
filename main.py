@@ -78,16 +78,21 @@ for linea in archivo:
 	if(len(brackets) > 0):
 		printError("Hay una llave mal cerrada/abierta", i,"")
 		flags["error"]+=1
-	#verificar /inicio /fin
+	#Agregar inicio / fin a una lista
 	result = re.findall(r'\\inicio|\\fin',linea)
 	for tag in result:
 		inicioFinList.append(tag)
+	# Verificar que los items esten dentro de un \inicio
+	result = re.findall(r'\\item',linea)
+	if result and inicioFinList[-1] != '\\inicio':
+		printError("\item", i,"se encuentra fuera de una lista")
+		flags["error"]+=1 
 	i+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
 	printError("\\nproy",-1, "No ha sido declarada")
 	flags["error"]+=1
-
+#verificar /inicio /fin
 for i in range(len(inicioFinList)/2):
 	t1 = inicioFinList.pop()
 	t2 = inicioFinList.pop()
