@@ -18,7 +18,7 @@ for linea in archivo:
 	# Buscar  separarmiles
 	result = re.search(r'\\separamiles{}',linea)
 	if result:
-		if i < 2:
+		if i < 3:
 			flags["separamiles"] = True
 		else:
 			printError(result.group(),i, "ha sido declarada en un lugar incorrecto")
@@ -26,7 +26,7 @@ for linea in archivo:
 	# Buscar  ofecha
 	result = re.search(r'\\ofecha{}',linea)
 	if result:
-		if i < 2:
+		if i < 3:
 			flags["ofecha"] = True
 		else:
 			printError(result.group(),i, "ha sido declarada en un lugar incorrecto")
