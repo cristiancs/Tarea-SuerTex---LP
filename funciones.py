@@ -13,11 +13,7 @@ def separarNum(numero):
 	return numero
 
 def separamiles(linea):
-	palabras = linea.split()
-	linea = ""
-	for pal in palabras:
-		linea += re.sub(r'^[0-9]*$', separarNum, pal)+" "
-	return linea
+	return re.sub(r'^[0-9]+(?=\s)|(?<=\s)[0-9]+(?=\s)|(?<=\s)[0-9]+$', separarNum, linea)
 			
 def verifFecha(string):
 	return None	
@@ -114,15 +110,16 @@ p_abierto = False
 linea = archivo.readline()
 sig = ""
 for sig in archivo:
-	linea, p_abierto = formatPG(linea, sig, p_abierto)
-
 	if True:	# Modificar segun flag \separamiles{} correspondiente
 		linea = separamiles(linea)
 
+	linea, p_abierto = formatPG(linea, sig, p_abierto)
 	salida.write(writeLine(linea))
 	linea = sig
+
+linea = separamiles(linea)		# Verificar ultima
+
 linea, p_abierto = formatPG(linea, sig, p_abierto, True)
-linea = separamiles(linea)		# Verificar ultima linea
 salida.write(writeLine(linea))
 salida.write("</body>")
 
