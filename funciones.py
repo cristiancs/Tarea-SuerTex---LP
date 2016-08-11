@@ -1,4 +1,5 @@
 import re
+from main import flags
 
 # FUNCIONES TRANSFORMACION A HTML
 # FUNCIONES
@@ -15,11 +16,12 @@ def separarNum(numero):
 def separamiles(linea):
 	return re.sub(r'^[0-9]+(?=\s)|(?<=\s)[0-9]+(?=\s)|(?<=\s)[0-9]+$', separarNum, linea)
 			
-def verifFecha(string):
-	return None	
+def dateReplace(fecha):
+	fecha = fecha.group(0)
+	return fecha[0:2]+"/"+fecha[3:5]+"/"+fecha[6:]
 
 def ofecha(fecha):
-	return None
+	return re.sub(r'[\d]{2}[^\w\d\s][\d]{2}[^\w\d\s][\d]{4}', dateReplace, fecha)
 
 # COMANDOS
 def fn(texto):
@@ -107,18 +109,22 @@ archivo = open("suertex.txt", "r")
 salida = open("output.html", "w")
 salida.write("<!DOCTYPE HTML>")
 p_abierto = False
+if flags["separamiles"]:
+	archivo.readline()
+if flags["ofecha"]:
+	archivo.readline()
 linea = archivo.readline()
 sig = ""
 for sig in archivo:
-	if True:	# Modificar segun flag \separamiles{} correspondiente
+	if flags["separamiles"]:	# Modificar segun flag \separamiles{} correspondiente
 		linea = separamiles(linea)
-
+	if flags["ofecha"]:
+		linea = ofecha(linea)		
 	linea, p_abierto = formatPG(linea, sig, p_abierto)
 	salida.write(writeLine(linea))
 	linea = sig
-
 linea = separamiles(linea)		# Verificar ultima
-
+linea = ofecha(linea)
 linea, p_abierto = formatPG(linea, sig, p_abierto, True)
 salida.write(writeLine(linea))
 salida.write("</body>")
