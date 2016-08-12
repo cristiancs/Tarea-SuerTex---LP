@@ -9,7 +9,9 @@ def printError(funcion,linea, error):
 # Buscar Si tiene el title
 archivo = open("suertex.txt", "r")
 i = 1
+n_linea = 0
 flags = {"separamiles": False,"ofecha": False,"error": 0}
+list_flag = {"inicio": False, "item": False}
 data = {"nproy": False}
 validFunctions = {'separamiles','ofecha','fn','fc','nproy','titulo','inicio','fin','item'}
 brackets = []
@@ -93,6 +95,27 @@ for linea in archivo:
 	if result and not re.search(r'\\inicio{.{0,}}', inicioFinList[-1]):
 		printError("\item", i,"se encuentra fuera de una lista")
 		flags["error"]+=1 
+
+	# Verificar items dentro de inicio
+	if re.search(r'\\inicio{', linea):
+		if list_flag["inicio"]:
+			print("Hay un inicio dentro de otro inicio")
+		else:
+			list_flag["inicio"] = True
+			n_linea = i
+		if not re.search(r'}[\s]*$', linea):
+			print "Hay texto despues de un inicio"
+	if list_flag["inicio"] and i > n_linea:
+		if re.search(r'^\\item{.*}$', linea):
+			if not list_flag["item"]:
+				list_flag["item"] = True
+		elif re.search(r'\\fin{', linea):
+			if not list_flag["item"]:
+				print("No hay items en la lista")
+			list_flag["inicio"] = False
+		else:
+			if re.search(r'[\S]+', linea):
+				print("Hay texto fuera de un item")
 	i+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
