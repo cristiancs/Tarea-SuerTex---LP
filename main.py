@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # -*- coding: utf-8 -*-
 import re
 from funciones import *
@@ -135,7 +133,6 @@ if flags["error"] > 0:
 	# Se ha generado un error, muere el programa.
 	print "No ha sido posible compilar el archivo suertex.txt, se han generado "+str(flags["error"])+" errores."
 else:
-<<<<<<< HEAD
 	# Se genera código
 	archivo = open("suertex.txt", "r")
 	salida = open("output.html", "w")
@@ -165,9 +162,3 @@ else:
 	archivo.close()
 	salida.close()
 	print "Compilación generada"
-=======
-	# Se genera el código
-	print "Compilación generada"
-	import funciones
->>>>>>> origin/master
->>>>>>> origin/master
