@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-
-def printError(funcion,linea, error):
-	if(linea == -1):
-		print "[ERROR] La función "+funcion+" "+error
-	else:
-		print "[ERROR][Linea: "+str(linea)+"] \""+funcion+"\" "+error
-# Buscar Si tiene el title
+from funciones import *
 archivo = open("suertex.txt", "r")
 i = 1
 n_linea = 0
@@ -16,6 +10,8 @@ data = {"nproy": False}
 validFunctions = {'separamiles','ofecha','fn','fc','nproy','titulo','inicio','fin','item'}
 brackets = []
 inicioFinList = []
+
+#Compilar
 for linea in archivo:
 	# Buscar  separarmiles
 	result = re.search(r'\\separamiles{}',linea)
@@ -132,10 +128,37 @@ for i in range(len(inicioFinList)/2):
 	if not re.search(r'\\inicio{.{0,}}', t2) or not re.search(r'\\fin{.{0,}}', t1):
 		printError("tag \inicio, \\fin",-1, "No ha sido utilizado correctamente")
 		flags["error"]+=1
+archivo.close()
 if flags["error"] > 0:
 	# Se ha generado un error, muere el programa.
 	print "No ha sido posible compilar el archivo suertex.txt, se han generado "+str(flags["error"])+" errores."
 else:
-	# Se genera el código
+	# Se genera código
+	archivo = open("suertex.txt", "r")
+	salida = open("output.html", "w")
+
+	# COMIENZO ARCHIVO HTML
+	salida.write("<!DOCTYPE HTML>\n")
+	p_abierto = False	# Inicializar parrafo cerrado
+	if flags["separamiles"]:	# Verificar comandos y saltar linea
+		archivo.readline()
+	if flags["ofecha"]:
+		archivo.readline()
+	linea = archivo.readline()
+	sig = ""					# Linea auxiliar para recordar la anterior
+	for sig in archivo:
+		if flags["separamiles"]:	# Aplicar comando segun corresponda
+			linea = separamiles(linea)
+		if flags["ofecha"]:
+			linea = ofecha(linea)		
+		linea, p_abierto = formatPG(linea, sig, p_abierto)	# Formatear segun parrafo
+		salida.write(writeLine(linea))				# Transformar a html
+		linea = sig
+	linea = separamiles(linea)		# Aplicar proceso a ultima linea
+	linea = ofecha(linea)
+	linea, p_abierto = formatPG(linea, sig, p_abierto, True)
+	salida.write(writeLine(linea))
+	salida.write("</body>")			# Finalizar html
+	archivo.close()
+	salida.close()
 	print "Compilación generada"
-	import funciones

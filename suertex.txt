@@ -1,5 +1,4 @@
 \separamiles{}
-\ofecha{}
 \nproy{Nombre Proyecto}
 \titulo{A que temer}
 Todo hombre sabio teme \fn{tres} cosas:

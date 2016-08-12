@@ -1,6 +1,5 @@
+# -*- coding: utf-8 -*-
 import re
-from main import flags
-
 # FUNCIONES TRANSFORMACION A HTML
 # FUNCIONES
 
@@ -201,31 +200,12 @@ def writeLine(linea):
 		linea = re.sub(r'\\[^\\]*?}', toHtml, linea)	# Transformar a html
 		linea = writeLine(linea)	# Anidado
 	return linea
-
-archivo = open("suertex.txt", "r")
-salida = open("output.html", "w")
-
-# COMIENZO ARCHIVO HTML
-salida.write("<!DOCTYPE HTML>")
-p_abierto = False	# Inicializar parrafo cerrado
-if flags["separamiles"]:	# Verificar comandos y saltar linea
-	archivo.readline()
-if flags["ofecha"]:
-	archivo.readline()
-linea = archivo.readline()
-sig = ""					# Linea auxiliar para recordar la anterior
-for sig in archivo:
-	if flags["separamiles"]:	# Aplicar comando segun corresponda
-		linea = separamiles(linea)
-	if flags["ofecha"]:
-		linea = ofecha(linea)		
-	linea, p_abierto = formatPG(linea, sig, p_abierto)	# Formatear segun parrafo
-	salida.write(writeLine(linea))				# Transformar a html
-	linea = sig
-linea = separamiles(linea)		# Aplicar proceso a ultima linea
-linea = ofecha(linea)
-linea, p_abierto = formatPG(linea, sig, p_abierto, True)
-salida.write(writeLine(linea))
-salida.write("</body>")			# Finalizar html
-archivo.close()
-salida.close()
+"""
+printError(funcion,linea, error)
+Printea en consola el error que entrega el compilador
+"""
+def printError(funcion,linea, error):
+	if(linea == -1):
+		print "[ERROR] La función "+funcion+" "+error
+	else:
+		print "[ERROR][Linea: "+str(linea)+"] \""+funcion+"\" "+error
