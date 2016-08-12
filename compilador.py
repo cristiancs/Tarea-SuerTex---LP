@@ -1,19 +1,19 @@
-<<<<<<< HEAD
-=======
 # -*- coding: utf-8 -*-
 import re
-from funciones import *
+
+def printError(funcion,linea, error):
+	if(linea == -1):
+		print "[ERROR] La función "+funcion+" "+error
+	else:
+		print "[ERROR][Linea: "+str(linea)+"] \""+funcion+"\" "+error
+# Buscar Si tiene el title
 archivo = open("suertex.txt", "r")
 i = 1
-n_linea = 0
 flags = {"separamiles": False,"ofecha": False,"error": 0}
-list_flag = {"inicio": False, "item": False}
 data = {"nproy": False}
 validFunctions = {'separamiles','ofecha','fn','fc','nproy','titulo','inicio','fin','item'}
 brackets = []
 inicioFinList = []
-
-#Compilar
 for linea in archivo:
 	# Buscar  separarmiles
 	result = re.search(r'\\separamiles{}',linea)
@@ -93,31 +93,6 @@ for linea in archivo:
 	if result and not re.search(r'\\inicio{.{0,}}', inicioFinList[-1]):
 		printError("\item", i,"se encuentra fuera de una lista")
 		flags["error"]+=1 
-
-	# Verificar items dentro de inicio
-	if re.search(r'\\inicio{', linea):	# Buscar inicio de lista
-		if list_flag["inicio"]:		# Si ya habia iniciado
-			printError("\inicio", i, "hay un inicio dentro de otro inicio")
-			flags["error"]+=1 
-		else:
-			list_flag["inicio"] = True
-			n_linea = i
-		if not re.search(r'}[\s]*$', linea):	# Incorrecto cierre de linea
-			printError("\inicio", i, "hay texto fuera de un item en una lista")
-			flags["error"]+=1 
-	if list_flag["inicio"] and i > n_linea:
-		if re.search(r'^\\item{.*}$', linea):	# Actualizar flag de item
-			if not list_flag["item"]:
-				list_flag["item"] = True
-		elif re.search(r'\\fin{', linea):		# Buscar cierre y actualizar
-			if not list_flag["item"]:
-				printError("\\fin", i, "no hay items en la lista")
-				flags["error"]+=1 
-			list_flag["inicio"] = False
-		else:
-			if re.search(r'[\S]+', linea):		# Si no encontro item ni fin, buscar si hay algo demas
-				printError("\inicio", i, "hay texto fuera de un item en una lista")
-				flags["error"]+=1 
 	i+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
@@ -130,44 +105,10 @@ for i in range(len(inicioFinList)/2):
 	if not re.search(r'\\inicio{.{0,}}', t2) or not re.search(r'\\fin{.{0,}}', t1):
 		printError("tag \inicio, \\fin",-1, "No ha sido utilizado correctamente")
 		flags["error"]+=1
-archivo.close()
 if flags["error"] > 0:
 	# Se ha generado un error, muere el programa.
 	print "No ha sido posible compilar el archivo suertex.txt, se han generado "+str(flags["error"])+" errores."
 else:
-<<<<<<< HEAD
-	# Se genera código
-	archivo = open("suertex.txt", "r")
-	salida = open("output.html", "w")
-
-	# COMIENZO ARCHIVO HTML
-	salida.write("<!DOCTYPE HTML>\n")
-	p_abierto = False	# Inicializar parrafo cerrado
-	if flags["separamiles"]:	# Verificar comandos y saltar linea
-		archivo.readline()
-	if flags["ofecha"]:
-		archivo.readline()
-	linea = archivo.readline()
-	sig = ""					# Linea auxiliar para recordar la anterior
-	for sig in archivo:
-		if flags["separamiles"]:	# Aplicar comando segun corresponda
-			linea = separamiles(linea)
-		if flags["ofecha"]:
-			linea = ofecha(linea)		
-		linea, p_abierto = formatPG(linea, sig, p_abierto)	# Formatear segun parrafo
-		salida.write(writeLine(linea))				# Transformar a html
-		linea = sig
-	linea = separamiles(linea)		# Aplicar proceso a ultima linea
-	linea = ofecha(linea)
-	linea, p_abierto = formatPG(linea, sig, p_abierto, True)
-	salida.write(writeLine(linea))
-	salida.write("</body>")			# Finalizar html
-	archivo.close()
-	salida.close()
-	print "Compilación generada"
-=======
 	# Se genera el código
 	print "Compilación generada"
 	import funciones
->>>>>>> origin/master
->>>>>>> origin/master
