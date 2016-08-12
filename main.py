@@ -53,8 +53,6 @@ for linea in archivo:
 			flags["error"]+=1
 	# Buscar \ mal usadas
 	result = re.findall(r'\\.[^\s-]{0,}',linea)
-	def limpiar(string):
-		return (string.split("{")[0])[1:]
 	if result:
 		result = map(limpiar, result)
 		for funcion in result:

@@ -209,3 +209,9 @@ def printError(funcion,linea, error):
 		print "[ERROR] La función "+funcion+" "+error
 	else:
 		print "[ERROR][Linea: "+str(linea)+"] \""+funcion+"\" "+error
+"""
+limpiar(string)
+Quita la basura para determinar que funcion se intenta realizar
+"""
+def limpiar(string):
+	return (string.split("{")[0])[1:]
