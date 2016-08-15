@@ -139,14 +139,13 @@ else:
 	# COMIENZO ARCHIVO HTML
 	salida.write("<!DOCTYPE HTML>\n")
 	p_abierto = False	# Inicializar parrafo cerrado
-	linea = archivo.readline()
+	linea = ""
 	while not re.search(r'[\S]', linea):	# Saltar lineas vacias
 		linea = archivo.readline()
 	if flags["separamiles"]:	# Verificar comandos y saltar linea
-		archivo.readline()
+		linea = archivo.readline()
 	if flags["ofecha"]:
-		archivo.readline()
-	linea = archivo.readline()
+		linea = archivo.readline()
 	sig = ""					# Linea auxiliar para recordar la anterior
 	for sig in archivo:
 		if flags["separamiles"]:	# Aplicar comando segun corresponda
