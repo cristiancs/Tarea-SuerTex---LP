@@ -1,3 +1,6 @@
+
+
+
 \separamiles{}
 \nproy{Nombre Proyecto}
 \titulo{A que temer}

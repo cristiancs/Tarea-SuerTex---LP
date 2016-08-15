@@ -2,7 +2,7 @@
 import re
 from funciones import *
 archivo = open("suertex.txt", "r")
-i = 1
+i = 0
 n_linea = 0
 flags = {"separamiles": False,"ofecha": False,"error": 0}
 list_flag = {"inicio": False, "item": False}
@@ -13,6 +13,8 @@ inicioFinList = []
 
 #Compilar
 for linea in archivo:
+	if linea.strip():
+		i+=1
 	# Buscar  separarmiles
 	result = re.search(r'\\separamiles{}',linea)
 	if result:
@@ -114,7 +116,6 @@ for linea in archivo:
 			if re.search(r'[\S]+', linea):		# Si no encontro item ni fin, buscar si hay algo demas
 				printError("\inicio", i, "hay texto fuera de un item en una lista")
 				flags["error"]+=1 
-	i+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
 	printError("\\nproy",-1, "No ha sido declarada")
