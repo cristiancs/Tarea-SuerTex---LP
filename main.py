@@ -33,7 +33,7 @@ for linea in archivo:
 			printError(result.group(),i2, "ha sido declarada en un lugar incorrecto")
 			flags["error"]+=1
 	# Buscar titulo de la página
-	result = re.search(r'\\nproy{[a-zA-Z\s]{1,}}',linea)
+	result = re.search(r'\\nproy{.{1,}}',linea)
 	if result:
 		if data["nproy"] != False:
 			printError("\\nproy",i2, "ha sido declarada más de una vez")
