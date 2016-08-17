@@ -50,7 +50,6 @@ for linea in archivo:
 	for text in result:
 		r2 = text.split("{")
 		r2 = r2[0].split("\\")
-		#print r2
 		if len(r2) == 1 or r2[-1] not in validFunctions:
 			printError(r2[-1][:-1],i2, "no es una función valida")
 			flags["error"]+=1
