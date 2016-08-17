@@ -5,7 +5,7 @@
 \nproy{Nombre Proyecto}
 \titulo{A que temer}
 Todo hombre sabio teme \fn{tres} cosas:
-\inicio{lista_enumerada}
+\inicio{}
 \item{La tormenta en el mar.}
 \item{La noche sin luna.}
 \item{La ira de un hombre amable.}
