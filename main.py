@@ -40,7 +40,7 @@ for linea in archivo:
 		else:
 			data["nproy"] = result.group()
 	# Buscar { mal usadas
-	result = re.findall(r'[a-zA-Z\s]{1,}{',linea)
+	result = re.findall(r'.{1,}{',linea)
 	for text in result:
 		if text.strip("{") not in validFunctions:
 			printError(text,i2, "no es una función valida")
