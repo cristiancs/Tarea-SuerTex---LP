@@ -27,7 +27,7 @@ segun separarNum
 retorna string del numero formateado
 """
 def separamiles(linea):
-	return re.sub(r'^[0-9]+(?=\s)|(?<=[\s\{\(])[0-9]+(?=[\s\}\)])|(?<=\s)[0-9]+$', separarNum, linea)
+	return re.sub(r'^[0-9]+(?=\b)|(?<=[\s\{\(])[0-9]+(?=[\s\}\)\.\,])|(?<=\s)[0-9]+$', separarNum, linea)
 
 """
 dateReplace(fecha)
