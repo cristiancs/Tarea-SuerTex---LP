@@ -1,13 +1,11 @@
-
-
-
 \separamiles{}
-\nproy{Nombre Proyecto 23}
-\titulo{A que temer}
-Todo hombre sabio teme \fn{tres} cosas:
+\ofecha{}
+\nproy{Nombre Proyecto}
+\titulo{A que \fc{temer} 100}
+Todo \fc{hombre sabio} teme \fc{tres grandes} cosas:
 \inicio{lista_enumerada}
-\item{La tormenta en el mar.}
-\item{La noche sin luna.}
+\item{10 La \fc{tormenta} en el mar.}
+\item{La noche sin luna. 27-03-2007  987654323456789}
 \item{La ira de un hombre amable.}
 \fin{lista_enumerada}
 \titulo{Como saber quien eres}
@@ -17,7 +15,7 @@ Pero Taborlin conocia el nombre de todas las cosas y todas las cosas estaban a s
 Le dijo a la piedra: \fc{Rompete!}, y la piedra se rompio.
 \fn{\fc{En resumen} Patrick Rothfuss} ha escrito 2 libros de la cronica de asesino de reyes:
 \inicio{lista_punteada}
-\item{El nombre del viento. 27-03-2007}
+\item{El nombre del viento. 27-03-2007  29-10-2008}
 \item{El temor de un hombre sabio. 01,03,2011}
 \fin{lista_punteada}
-Existen 2938194 posibilidades de que el usuario \fc{lala37284} exista en un juego.
+Existen 2938194 posibilidades de 10000 que el 100000 usuario \fc{lala37284} exista en un juego.

@@ -93,29 +93,26 @@ for linea in archivo:
 		flags["error"]+=1 
 
 	# Verificar items dentro de inicio
-	if re.search(r'\\inicio{', linea):	# Buscar inicio de lista
+	result = re.search(r'\\inicio{.{0,}}', linea)
+	if result:	# Buscar inicio de lista
 		if list_flag["inicio"]:		# Si ya habia iniciado
 			printError("\inicio", i2, "hay un inicio dentro de otro inicio")
 			flags["error"]+=1 
 		else:
 			list_flag["inicio"] = True
 			n_linea = i
-		if not re.search(r'}[\s]*$', linea):	# Incorrecto cierre de linea
+	# Incorrecto cierre de linea
+	elif list_flag["inicio"]:
+		if not re.search(r'\\item{.{0,}}|\\fin{.{0,}}',linea):
 			printError("\inicio", i2, "hay texto fuera de un item en una lista")
 			flags["error"]+=1 
-	if list_flag["inicio"] and i > n_linea:
-		if re.search(r'^\\item{.*}$', linea):	# Actualizar flag de item
-			if not list_flag["item"]:
-				list_flag["item"] = True
-		elif re.search(r'\\fin{', linea):		# Buscar cierre y actualizar
-			if not list_flag["item"]:
-				printError("\\fin", i2, "no hay items en la lista")
-				flags["error"]+=1 
+		if re.search(r'\\item{.{0,}}', linea):	# Actualizar flag de item
+			list_flag["item"] = True
+		elif re.search(r'\\fin{.{0,}}', linea) and not list_flag["item"]:	# Buscar cierre y actualizar
+			printError("\\fin", i2, "no hay items en la lista")
+			flags["error"]+=1 
+		elif re.search(r'\\fin{.{0,}}', linea):
 			list_flag["inicio"] = False
-		else:
-			if re.search(r'[\S]+', linea):		# Si no encontro item ni fin, buscar si hay algo demas
-				printError("\inicio", i2, "hay texto fuera de un item en una lista")
-				flags["error"]+=1 
 	i2+=1
 if not data["nproy"]:
 	#El titulo nunca fue declarado
