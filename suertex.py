@@ -4,7 +4,6 @@ from funciones import *
 archivo = open("suertex.txt", "r")
 i = 0
 i2 = 1
-n_linea = 0
 flags = {"separamiles": False,"ofecha": False,"error": 0}
 list_flag = {"inicio": False, "item": False}
 data = {"nproy": False}
@@ -100,10 +99,9 @@ for linea in archivo:
 			flags["error"]+=1 
 		else:
 			list_flag["inicio"] = True
-			n_linea = i
 	# Incorrecto cierre de linea
 	elif list_flag["inicio"]:
-		if not re.search(r'\\item{.{0,}}|\\fin{.{0,}}',linea):
+		if not re.search(r'^\\item{.{0,}}[\s]*$|\\fin{.{0,}}',linea):
 			printError("\inicio", i2, "hay texto fuera de un item en una lista")
 			flags["error"]+=1 
 		if re.search(r'\\item{.{0,}}', linea):	# Actualizar flag de item
