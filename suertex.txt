@@ -1,7 +1,7 @@
 \separamiles{}
 \ofecha{}
 \nproy{Nombre Proyecto}
-\titulo{A que \fc{temer} 100}\fn{asd}
+\titulo{A que \fc{temer} 100}
 Todo \fc{hombre sabio} teme \fc{tres grandes} cosas:
 \inicio{lista_enumerada}
 \item{10 La \fc{tormenta} en el mar.}
