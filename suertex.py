@@ -63,7 +63,7 @@ for linea in archivo:
 	result = re.findall(r'\\.[^\s-]*',linea)
 	if result:
 		result = map(limpiar, result)
-		if len(result) > 1 and re.search(r'\\(inicio|nproy|item|fin){.{0,}}(.){0,}\\', linea):
+		if len(result) > 1 and re.search(r'\\(inicio|nproy|titulo|item|fin){.{0,}}(.){0,}\\', linea):
 			printError("\\",i2, " no esta permitido el uso de 2 \  en una linea (posiblemente 2 comandos en misma linea)")
 			flags["error"]+=1
 		for funcion in result:
