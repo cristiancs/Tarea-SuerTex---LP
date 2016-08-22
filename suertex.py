@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import re
 from funciones import *
 archivo = open("suertex.txt", "r")
 i = 0
