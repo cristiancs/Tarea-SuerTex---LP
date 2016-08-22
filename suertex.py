@@ -39,13 +39,13 @@ for linea in archivo:
 		else:
 			data["nproy"] = result.group()
 	# Buscar { mal usadas
-	result = re.findall(r'[a-zA-Z0-9]{1,}{',linea)
+	result = re.findall(r'[a-zA-Z0-9]*{',linea)
 	for text in result:
 		if text.strip("{") not in validFunctions:
 			printError(text,i2, "no es una función valida")
 			flags["error"]+=1
 	# Buscar } mal usadas
-	result = re.findall(r'.{1,}}',linea)
+	result = re.findall(r'.*}',linea)
 	for text in result:
 		r2 = text.split("{")
 		r2 = r2[0].split("\\")
@@ -53,7 +53,7 @@ for linea in archivo:
 			printError(r2[-1][:-1],i2, "no es una función valida")
 			flags["error"]+=1
 	# Buscar \ mal usadas
-	result = re.findall(r'\\.[^\s-]{0,}',linea)
+	result = re.findall(r'\\.[^\s-]*',linea)
 	if result:
 		result = map(limpiar, result)
 		for funcion in result:
