@@ -1,4 +1,5 @@
 \separamiles{}
+\separamiles{}
 \ofecha{}
 \nproy{Nombre Proyecto}
 \titulo{A que \fc{temer} 100}
@@ -8,6 +9,7 @@ Todo \fc{hombre sabio} teme \fc{tres grandes} cosas:
 \item{La noche sin luna. 27-03-2007  987654323456789}
 \item{La ira de un hombre amable.}
 \fin{lista_enumerada}
+
 \titulo{Como saber quien eres}
 Si quieres saber quien eres, camina hasta que no haya nadie que sepa tu nombre.
 \titulo{Taborlin el Grande}

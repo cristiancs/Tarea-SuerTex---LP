@@ -17,19 +17,27 @@ for linea in archivo:
 	# Buscar  separarmiles
 	result = re.search(r'\\separamiles{}',linea)
 	if result:
-		if i < 3:
+		if i < 3 and flags[limpiar(result.group())] != True:
 			flags["separamiles"] = True
-		else:
+		elif flags[limpiar(result.group())] != True:
 			printError(result.group(),i2, "ha sido declarada en un lugar incorrecto")
 			flags["error"]+=1
+		else:
+			printError(result.group(),i2, "ha sido declarada más de 1 vez")
+			flags["error"]+=1
+
 	# Buscar  ofecha
 	result = re.search(r'\\ofecha{}',linea)
 	if result:
-		if i < 3:
+		if i < 3 and flags[limpiar(result.group())] != True:
 			flags["ofecha"] = True
-		else:
+		elif flags[limpiar(result.group())] != True:
 			printError(result.group(),i2, "ha sido declarada en un lugar incorrecto")
 			flags["error"]+=1
+		else:
+			printError(result.group(),i2, "ha sido declarada más de 1 vez")
+			flags["error"]+=1
+
 	# Buscar titulo de la página
 	result = re.search(r'\\nproy{.{1,}}',linea)
 	if result:
