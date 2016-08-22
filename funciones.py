@@ -27,7 +27,7 @@ segun separarNum
 retorna string del numero formateado
 """
 def separamiles(linea):
-	return re.sub(r'^[0-9]+(?=[\s\}\)\.\,])|(?<=[\s\{\(])[0-9]+(?=[\s\}\)\.\,])|(?<=\s)[0-9]+$', separarNum, linea)
+	return re.sub(r'^[0-9]{4,}(?=[\s|(\}\)\.\,)\W])|(?<=[\s\{\(])[0-9]{4,}(?=[\s|(\}\)\.\,)\W])|(?<=[\s\(\{])[0-9]{4,}$', separarNum, linea)
 
 """
 dateReplace(fecha)
@@ -46,7 +46,7 @@ formatear, para luego formatear segun dateReplace
 retorna string de la fecha formateada
 """
 def ofecha(fecha):
-	return re.sub(r'[\d]{2}[^\w\d\s][\d]{2}[^\w\d\s][\d]{4}', dateReplace, fecha)
+	return re.sub(r'(?<=[\s\{\(])[\d]{2}[^\w\d\s][\d]{2}[^\w\d\s][\d]{4}(?=[\s\}\)\.\,])', dateReplace, fecha)
 
 # COMANDOS
 """
