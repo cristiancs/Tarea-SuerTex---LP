@@ -1,5 +1,4 @@
 \separamiles{}
-\separamiles{}
 \ofecha{}
 \nproy{Nombre Proyecto}
 \titulo{A que \fc{temer} 100}

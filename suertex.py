@@ -63,11 +63,14 @@ for linea in archivo:
 	result = re.findall(r'\\.[^\s-]*',linea)
 	if result:
 		result = map(limpiar, result)
+		if len(result) > 1 and re.search(r'(\}|\s){1,} \\\w*', linea):
+			printError("\\",i2, " no esta permitido el uso de 2 \  en una linea (posiblemente 2 comandos en misma linea)")
+			flags["error"]+=1
 		for funcion in result:
 			if funcion not in validFunctions:
 				printError("\\",i2, " no esta permitida fuera de las variables")
 				flags["error"]+=1
-	
+
 	# Verificar que se usen bien los { }, [ ]
 	result = re.findall(r'[\[\{\]\}]',linea)
 	for caracter in result:
