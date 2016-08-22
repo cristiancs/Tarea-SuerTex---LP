@@ -58,7 +58,7 @@ for linea in archivo:
 		result = map(limpiar, result)
 		for funcion in result:
 			if funcion not in validFunctions:
-				printError("/",i2, " no esta permitida fuera de las variables")
+				printError("\\",i2, " no esta permitida fuera de las variables")
 				flags["error"]+=1
 	
 	# Verificar que se usen bien los { }, [ ]
